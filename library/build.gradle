@@ -1,19 +1,19 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-
-group = 'org.jraf'
-ext.groupPath = group.replace('.', '/')
-ext.artifactId = 'android-switch-backport'
-version = '1.4.0'
+//apply plugin: 'maven'
+//
+//group = 'org.jraf'
+//ext.groupPath = group.replace('.', '/')
+//ext.artifactId = 'android-switch-backport'
+//version = '1.4.0'
 
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '20.0.0'
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 19
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
     }
     buildTypes {
         release {
@@ -32,15 +32,15 @@ android {
 }
 
 // Use "gradle uploadArchives" to deploy the aar to your local maven repository
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: mavenLocal().getUrl())
-
-            pom.artifactId = artifactId
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: mavenLocal().getUrl())
+//
+//            pom.artifactId = artifactId
+//        }
+//    }
+//}
 
 android.libraryVariants.all { variant ->
     task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {

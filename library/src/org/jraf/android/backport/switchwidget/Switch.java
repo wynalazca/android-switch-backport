@@ -70,7 +70,8 @@ public class Switch extends CompoundButton {
 
     private final Drawable mThumbDrawable;
     private final Drawable mTrackDrawable;
-    private final int mThumbTextPadding;
+	private final int mThumbTextHPadding;
+	private final int mThumbTextVPadding;
     private final int mSwitchMinWidth;
     private final int mSwitchPadding;
     private CharSequence mTextOn;
@@ -146,7 +147,8 @@ public class Switch extends CompoundButton {
         mTrackDrawable = a.getDrawable(R.styleable.Switch_asb_track);
         mTextOn = a.getText(R.styleable.Switch_asb_textOn);
         mTextOff = a.getText(R.styleable.Switch_asb_textOff);
-        mThumbTextPadding = a.getDimensionPixelSize(R.styleable.Switch_asb_thumbTextPadding, 0);
+	    mThumbTextHPadding = a.getDimensionPixelSize(R.styleable.Switch_asb_thumbTextPadding, 0);
+	    mThumbTextVPadding = a.getDimensionPixelSize(R.styleable.Switch_asb_thumbTextVPadding, 0);
         mSwitchMinWidth = a.getDimensionPixelSize(R.styleable.Switch_asb_switchMinWidth, 0);
         mSwitchPadding = a.getDimensionPixelSize(R.styleable.Switch_asb_switchPadding, 0);
 
@@ -298,6 +300,11 @@ public class Switch extends CompoundButton {
     @Override
     @SuppressLint("NewApi")
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	    final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+	    final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+	    int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+	    int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
         if (mOnLayout == null) {
             mOnLayout = makeLayout(mTextOn);
         }
@@ -307,12 +314,40 @@ public class Switch extends CompoundButton {
 
         mTrackDrawable.getPadding(mTempRect);
         final int maxTextWidth = Math.max(mOnLayout.getWidth(), mOffLayout.getWidth());
-        final int switchWidth = Math.max(mSwitchMinWidth, maxTextWidth * 2 + mThumbTextPadding * 4 + mTempRect.left + mTempRect.right);
-        final int switchHeight = mTrackDrawable.getIntrinsicHeight();
+        final int switchWidth = Math.max(mSwitchMinWidth, maxTextWidth * 2 + mThumbTextHPadding * 4 + mTempRect.left + mTempRect.right);
+	    final int switchHeight = mTrackDrawable.getIntrinsicHeight() + mThumbTextVPadding * 2;
 
-        mThumbWidth = maxTextWidth + mThumbTextPadding * 2;
+	    mThumbWidth = switchWidth / 2;
 
-        mSwitchWidth = switchWidth;
+	    switch (widthMode) {
+		    case MeasureSpec.AT_MOST:
+			    widthSize = Math.min(widthSize, switchWidth);
+			    break;
+
+		    case MeasureSpec.UNSPECIFIED:
+			    widthSize = switchWidth;
+			    break;
+
+		    case MeasureSpec.EXACTLY:
+			    // Just use what we were given
+			    break;
+	    }
+
+	    switch (heightMode) {
+		    case MeasureSpec.AT_MOST:
+			    heightSize = Math.min(heightSize, switchHeight);
+			    break;
+
+		    case MeasureSpec.UNSPECIFIED:
+			    heightSize = switchHeight;
+			    break;
+
+		    case MeasureSpec.EXACTLY:
+			    // Just use what we were given
+			    break;
+	    }
+
+	    mSwitchWidth = switchWidth;
         mSwitchHeight = switchHeight;
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

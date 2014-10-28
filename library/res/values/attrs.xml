@@ -73,6 +73,8 @@
         <attr name="asb_switchMinWidth" format="dimension" />
         <!-- Minimum space between the switch and caption text -->
         <attr name="asb_switchPadding" format="dimension" />
+        <!-- Amount of padding on above and below text within the switch thumb. -->
+        <attr name="asb_thumbTextVPadding" format="dimension" />
     </declare-styleable>
     <declare-styleable name="SwitchBackportTheme">
         <attr name="asb_switchStyle" format="reference" />

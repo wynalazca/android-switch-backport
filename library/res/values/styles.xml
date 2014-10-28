@@ -32,6 +32,7 @@
         <item name="asb_textOn">@string/switch_on</item>
         <item name="asb_textOff">@string/switch_off</item>
         <item name="asb_thumbTextPadding">12dip</item>
+        <item name="asb_thumbTextVPadding">12dip</item>
         <item name="asb_switchMinWidth">96dip</item>
         <item name="asb_switchPadding">16dip</item>
     </style>
@@ -43,6 +44,7 @@
         <item name="asb_textOn">@string/switch_on</item>
         <item name="asb_textOff">@string/switch_off</item>
         <item name="asb_thumbTextPadding">12dip</item>
+        <item name="asb_thumbTextVPadding">12dip</item>
         <item name="asb_switchMinWidth">96dip</item>
         <item name="asb_switchPadding">16dip</item>
     </style>
